@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="Page.js"></script>
+    <script type="text/javascript" src="observerNotepad.js"></script>
+    <script type="text/javascript" src="SimpleNotepad.js"></script>
+    <script type="text/javascript" src="SecuredNotepad.js"></script>
+    <script type="text/javascript" src="Interface.js"></script>
+    <script type="text/javascript" src="AbstractЕlectronicDevice.js"></script>
+    <script type="text/javascript" src="ElectronicSeciredNotepad.js"></script>
+
+    <script type="text/javascript" src="factory.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var pages = [];
+
+    var page1 = new Page('first', 'asjkhiou32ipw239', 1)
+    pages.push(page1);
+    console.log(page1.viewText());
+    console.log(page1.containsDigits());
+
+    var page2 = new Page('second', 'kdjflejfiowe3289', 2);
+    pages.push(page2);
+
+    var page3 = new Page('third', 'kldjjdkljf', 3);
+    pages.push(page3);
+
+    console.log('SimpleNotepad Demo: ');
+    var simpleN = new Module.SimpleNotepad()
+    simpleN.add(page1);
+    simpleN.add(page2);
+    simpleN.add(page3);
+    simpleN.addTextInPage(1, ' 23');
+    simpleN.updateText(2, 'Updated text');
+    simpleN.searchWord('23');
+    console.log('all pages with digits: \n');
+    console.log(simpleN.printAllPagesWithDigits());
+    console.log('all pages: \n');
+    console.log(simpleN.print());
+    simpleN.remove(page2);
+    for(var i = 0; i < simpleN._pages.length; i++){
+        console.log(simpleN._pages[i].getNumber());
+    }
+
+    var elSecN = new ElectronicSecuredNotepad('2345Oy', true);
+    console.log(elSecN);
+    elSecN.add(page1);
+    console.log(elSecN._pages);
+
+    console.log('SecuredNotepad Demo:');
+    var securedN = new SecuredNotepad(pages, '1234Yo');
+    securedN.addTextInPage(1, ' 45', '1234Yo');
+    securedN.updateText(2, 'Updated text!(2)', '1234Yo');
+    securedN.searchWord(' 45', '1234Yo');
+    console.log('all pages with digits: \n');
+    console.log(securedN.printAllPagesWithDigits('1234Yo'));
+    console.log('all pages: \n');
+    console.log(securedN.print('1234Yo'));
+
+    var firstNotepad = makeNotepad(pages);
+    console.log(firstNotepad.constructor);
+    var secondNotepad = makeNotepad(pages, 'Yo1234');
+    console.log(secondNotepad.constructor);
+    var thirdNotepad = makeNotepad(pages, 'Yo1234', true);
+    console.log(thirdNotepad.constructor);
+</script>
+</body>
+</html>
